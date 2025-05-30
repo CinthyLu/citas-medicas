@@ -1,4 +1,7 @@
 .dashboard {
+  top:0;
+  left:0;
+  position:fixed;
   display: flex;
   height: 100vh;
 }

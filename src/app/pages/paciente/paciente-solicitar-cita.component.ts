@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MedicoService } from '../../services/medico.service';
 import { CitasService } from '../../services/citas.service';
 import { AgendaService } from '../../services/agenda.service';
 import { Medico } from '../../models/medico.model';
 import { Agenda } from '../../models/agenda.model';
 import { Auth } from '@angular/fire/auth';
-import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-paciente-solicitar-cita',
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './paciente-solicitar-cita.component.html',
   styleUrls: ['./paciente-solicitar-cita.component.css']
@@ -70,7 +70,6 @@ export class PacienteSolicitarCitaComponent implements OnInit {
     }
 
     const agendaSeleccionada = this.agendasDisponibles.find(a => a.id === this.form.value.agendaId);
-
     if (!agendaSeleccionada) {
       this.mensaje = 'Agenda seleccionada no válida.';
       return;
@@ -88,11 +87,20 @@ export class PacienteSolicitarCitaComponent implements OnInit {
     };
 
     try {
-      await this.citasService.solicitarCita(cita);
+      // 1. Registrar la cita
+     await this.citasService.solicitarCita(cita, agendaSeleccionada.id!);
+
+
+      // 2. Marcar la agenda como no disponible
+      if (agendaSeleccionada.id) {
+        await this.agendaService.actualizarAgenda(agendaSeleccionada.id, { disponible: false });
+      }
+
       this.mensaje = 'Cita solicitada correctamente.';
       this.form.reset();
       this.agendasDisponibles = [];
     } catch (error) {
+      console.error(error);
       this.mensaje = 'Error al solicitar cita.';
     }
   }

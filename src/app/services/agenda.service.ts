@@ -54,4 +54,10 @@ getAgendasByMedico(medicoId: string): Observable<Agenda[]> {
   const agendaRef = doc(this.firestore, `agendas/${idAgenda}`);
   return updateDoc(agendaRef, { disponible });
 }
+
+actualizarAgenda(id: string, cambios: Partial<Agenda>) {
+  const agendaDoc = doc(this.firestore, `agendas/${id}`);
+  return updateDoc(agendaDoc, cambios);
+}
+
 }

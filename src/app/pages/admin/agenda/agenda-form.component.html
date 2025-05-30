@@ -1,7 +1,7 @@
 <form [formGroup]="formAgenda" (ngSubmit)="guardar()">
   <div class="form-group">
     <label>Médico</label>
-    <select class="form-control" formControlName="medicoId">
+    <select class="form-control" formControlName="uidMedico">
       <option *ngFor="let medico of medicos" [value]="medico.id">
         {{ medico.nombre }}
       </option>

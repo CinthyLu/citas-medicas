@@ -26,25 +26,32 @@ export class AgendaService {
   }
 
   getAgendas(): Observable<Agenda[]> {
-    return collectionData(this.agendaRef, { idField: 'uid' }) as Observable<Agenda[]>;
+    return collectionData(this.agendaRef, { idField: 'id' }) as Observable<Agenda[]>;
   }
 
-  getAgendasByMedico(medicoId: string): Observable<Agenda[]> {
-    const q = query(this.agendaRef, where('medicoId', '==', medicoId));
-    return collectionData(q, { idField: 'uid' }) as Observable<Agenda[]>;
-  }
+getAgendasByMedico(medicoId: string): Observable<Agenda[]> {
+  const q = query(this.agendaRef, where('uidMedico', '==', medicoId));
+  return collectionData(q, { idField: 'id' }) as Observable<Agenda[]>;
+}
+
+
 
   addAgenda(agenda: Agenda) {
     return addDoc(this.agendaRef, agenda);
   }
 
-  updateAgenda(uid: string, agenda: Partial<Agenda>) {
-    const agendaDocRef = doc(this.firestore, `agendas/${uid}`);
+  updateAgenda(id: string, agenda: Partial<Agenda>) {
+    const agendaDocRef = doc(this.firestore, `agendas/${id}`);
     return updateDoc(agendaDocRef, agenda);
   }
 
-  deleteAgenda(uid: string) {
-    const agendaDocRef = doc(this.firestore, `agendas/${uid}`);
+  deleteAgenda(id: string) {
+    const agendaDocRef = doc(this.firestore, `agendas/${id}`);
     return deleteDoc(agendaDocRef);
   }
+
+  updateDisponibilidadAgenda(idAgenda: string, disponible: boolean) {
+  const agendaRef = doc(this.firestore, `agendas/${idAgenda}`);
+  return updateDoc(agendaRef, { disponible });
+}
 }

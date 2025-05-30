@@ -1,20 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Medico } from '../../../models/medico.model';
 import { Agenda } from '../../../models/agenda.model';
 
 @Component({
-  selector: 'app-agenda-form',
   standalone: true,
+  selector: 'app-agenda-form',
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './agenda-form.component.html',
   styleUrls: ['./agenda-form.component.css']
 })
-export class AgendaFormComponent implements OnInit {
+export class AgendaFormComponent implements OnInit, OnChanges {
   @Input() agenda?: Agenda;
   @Input() medicos: Medico[] = [];
   @Output() onSave = new EventEmitter<Agenda>();
+  @Output() onCancel = new EventEmitter<void>();
 
   formAgenda!: FormGroup;
 
@@ -22,33 +23,50 @@ export class AgendaFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.formAgenda = this.fb.group({
-      medicoId: [this.agenda?.id || '', Validators.required],
-      fecha: [this.agenda?.fecha || '', Validators.required],
-      horaInicio: [this.agenda?.horaInicio || '', Validators.required],
-      horaFin: [this.agenda?.horaFin || '', Validators.required],
-      disponible: [this.agenda?.disponible ?? true]
+      uidMedico: ['', Validators.required],
+      fecha: ['', Validators.required],
+      horaInicio: ['', Validators.required],
+      horaFin: ['', Validators.required],
+      disponible: [true]
     });
   }
 
-  guardar(): void {
-  if (!this.formAgenda.valid) {
-    console.warn('Formulario inválido');
-    return;
+  ngOnChanges(): void {
+    if (this.agenda && this.formAgenda) {
+      this.formAgenda.patchValue({
+        uidMedico: this.agenda.uidMedico,
+        fecha: this.agenda.fecha,
+        horaInicio: this.agenda.horaInicio,
+        horaFin: this.agenda.horaFin,
+        disponible: this.agenda.disponible
+      });
+    }
   }
 
-  const isEditing = !!this.agenda?.id;
+  guardar() {
+    if (this.formAgenda.valid) {
+      const agendaForm = this.formAgenda.value;
 
-  const datos: Agenda = {
-    ...this.formAgenda.value,
-    ...(isEditing ? { uid: this.agenda!.id } : {})
-  };
+      const medico = this.medicos.find(m => m.id === agendaForm.uidMedico);
+      const medicoNombre = medico ? medico.nombre : 'Sin asignar';
 
-  this.onSave.emit(datos);
-  this.formAgenda.reset();
+      const agenda: Agenda = {
+  ...agendaForm,
+  medicoNombre
+};
+
+if (this.agenda?.id) {
+  agenda.id = this.agenda.id;
 }
+      this.onSave.emit(agenda);
+    }
 
+    this.formAgenda.reset();           // Limpia los campos
+    this.onCancel.emit();              // Le dice al padre que termine la edición
 
-  cancelar(): void {
-    this.formAgenda.reset();
+  }
+
+  cancelar() {
+    this.onCancel.emit();
   }
 }

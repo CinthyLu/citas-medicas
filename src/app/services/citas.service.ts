@@ -83,9 +83,14 @@ getCitasConNombres(): Observable<Cita[]> {
     return deleteDoc(citaDocRef);
   }
 
-  solicitarCita(cita: any) {
-  return addDoc(collection(this.firestore, 'citas'), cita);
+  solicitarCita(cita: any, idAgenda: string) {
+  const citasRef = collection(this.firestore, 'citas');
+  return addDoc(citasRef, cita).then(() => {
+    const agendaRef = doc(this.firestore, `agendas/${idAgenda}`);
+    return updateDoc(agendaRef, { disponible: false });
+  });
 }
+
 
 cancelarCita(citaId: string): Promise<void> {
   const citaRef = doc(this.firestore, `citas/${citaId}`);
@@ -93,3 +98,4 @@ cancelarCita(citaId: string): Promise<void> {
 }
 
 }
+

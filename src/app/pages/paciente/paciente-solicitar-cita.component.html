@@ -5,15 +5,19 @@
   <select id="medico" formControlName="medicoId">
     <option value="">--Seleccione un médico--</option>
     <option *ngFor="let medico of medicos" [value]="medico.id">
-      {{ medico.nombre }}
+      {{ medico.nombre }} - {{ medico.especialidad }}
     </option>
   </select>
 
-  <label for="fecha">Fecha:</label>
-  <input type="date" id="fecha" formControlName="fecha" />
-
-  <label for="hora">Hora:</label>
-  <input type="time" id="hora" formControlName="hora" />
+  <div *ngIf="agendasDisponibles.length > 0">
+    <label for="agenda">Fechas y Horarios Disponibles:</label>
+    <select id="agenda" formControlName="agendaId">
+      <option value="">--Seleccione una agenda--</option>
+      <option *ngFor="let agenda of agendasDisponibles" [value]="agenda.id">
+        {{ agenda.fecha }} - {{ agenda.horaInicio }} a {{ agenda.horaFin }}
+      </option>
+    </select>
+  </div>
 
   <label for="motivo">Motivo:</label>
   <textarea id="motivo" formControlName="motivo" rows="3"></textarea>

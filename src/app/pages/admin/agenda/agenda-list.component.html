@@ -20,7 +20,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let agenda of agendas$ | async">
-        <td>{{ getNombreMedico(agenda.id) }}</td>
+        <td>{{ getNombreMedico(agenda.uidMedico) }}</td>
         <td>{{ agenda.fecha }}</td>
         <td>{{ agenda.horaInicio }}</td>
         <td>{{ agenda.horaFin }}</td>

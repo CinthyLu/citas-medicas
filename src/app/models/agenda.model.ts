@@ -5,5 +5,5 @@ export interface Agenda {
   horaInicio: string;
   horaFin: string;
   disponible: boolean;
-  medicoNombre?: string; // opcional, útil para mostrar en frontend
+  medicoNombre?: string; 
 }

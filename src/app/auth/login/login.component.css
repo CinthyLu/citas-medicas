@@ -9,7 +9,7 @@
 }
 
 .input-field {
-  width: 100%;
+  width: 99%;
   padding: 10px 14px;
   margin-top: 12px;
   border: 1px solid #ccc;
@@ -17,6 +17,7 @@
   font-size: 1rem;
   box-sizing: border-box;
   transition: border-color 0.3s;
+
 }
 
 .input-field:focus {

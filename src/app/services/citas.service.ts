@@ -31,10 +31,11 @@ export interface Cita {
 export class CitasService {
   constructor(private firestore: Firestore) {}
 
-  getCitas(): Observable<Cita[]> {
-    const citasRef = collection(this.firestore, 'citas');
-    return collectionData(citasRef, { idField: 'id' }) as Observable<Cita[]>;
-  }
+getCitas(): Observable<any[]> {
+  const citasRef = collection(this.firestore, 'citas');
+  return collectionData(citasRef, { idField: 'id' }); // <-- esto incluye el ID de documento
+}
+
 
   getCitaById(id: string): Observable<Cita> {
     const citaDocRef = doc(this.firestore, `citas/${id}`);
@@ -78,10 +79,6 @@ getCitasConNombres(): Observable<Cita[]> {
     return updateDoc(citaDocRef, { estado });
   }
 
-  deleteCita(id: string) {
-    const citaDocRef = doc(this.firestore, `citas/${id}`);
-    return deleteDoc(citaDocRef);
-  }
 
   solicitarCita(cita: any, idAgenda: string) {
   const citasRef = collection(this.firestore, 'citas');
@@ -96,6 +93,27 @@ cancelarCita(citaId: string): Promise<void> {
   const citaRef = doc(this.firestore, `citas/${citaId}`);
   return deleteDoc(citaRef);
 }
+
+async eliminarCita(id: string): Promise<void> {
+  const citaRef = doc(this.firestore, `citas/${id}`);
+  const snapshot = await getDoc(citaRef);
+
+  if (!snapshot.exists()) {
+    throw new Error('La cita no existe');
+  }
+
+  const citaData: any = snapshot.data();
+  const uidAgenda = citaData.uidAgenda;
+
+  await deleteDoc(citaRef);
+
+  if (uidAgenda) {
+    const agendaRef = doc(this.firestore, `agendas/${uidAgenda}`);
+    await updateDoc(agendaRef, { disponible: true });
+  }
+}
+
+
 
 }
 

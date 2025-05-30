@@ -10,7 +10,8 @@
       <strong>Médico:</strong> {{ cita?.medicoNombre }} <br>
       <strong>Fecha:</strong> {{ cita?.fecha | date:'medium' }} <br>
       <strong>Estado:</strong> {{ cita?.estado }} <br>
-      <button (click)="cancelarCita(cita?.id)" [disabled]="cita?.estado !== 'Pendiente'">Cancelar</button>
+     <button (click)="eliminarCita(cita?.id)">Cancelar</button>
+
     </li>
   </ul>
 </ng-container>

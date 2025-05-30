@@ -38,7 +38,7 @@ export class CitasComponent implements OnInit {
 
   eliminarCita(id: string): void {
     if (confirm('¿Estás seguro de que deseas eliminar esta cita?')) {
-      this.citasService.deleteCita(id)
+      this.citasService.eliminarCita(id)
         .then(() => this.obtenerCitasPendientes());
     }
   }

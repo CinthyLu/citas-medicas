@@ -1,0 +1,18 @@
+<div class="perfil-container" *ngIf="form">
+  <h2>Mi Perfil</h2>
+  <form [formGroup]="form" (ngSubmit)="guardar()">
+    <label for="nombre">Nombre:</label>
+    <input id="nombre" type="text" formControlName="nombre" />
+
+    <label for="direccion">Dirección:</label>
+    <input id="direccion" type="text" formControlName="direccion" />
+
+    <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+    <input id="fechaNacimiento" type="date" formControlName="fechaNacimiento" />
+
+    <label for="email">Email:</label>
+    <input id="email" type="email" formControlName="email" />
+
+    <button type="submit" [disabled]="form.invalid">Guardar Cambios</button>
+  </form>
+</div>

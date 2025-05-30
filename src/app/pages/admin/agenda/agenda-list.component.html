@@ -1,0 +1,35 @@
+<div class="container">
+  <h2>Gestión de Agendas Médicas</h2>
+
+  <app-agenda-form
+    [agenda]="selectedAgenda"
+    [medicos]="medicos"
+    (onSave)="onSaveAgenda($event)">
+  </app-agenda-form>
+
+  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th>Médico</th>
+        <th>Fecha</th>
+        <th>Hora Inicio</th>
+        <th>Hora Fin</th>
+        <th>Disponible</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let agenda of agendas$ | async">
+        <td>{{ getNombreMedico(agenda.id) }}</td>
+        <td>{{ agenda.fecha }}</td>
+        <td>{{ agenda.horaInicio }}</td>
+        <td>{{ agenda.horaFin }}</td>
+        <td>{{ agenda.disponible ? 'Sí' : 'No' }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning" (click)="editAgenda(agenda)">Editar</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteAgenda(agenda.id!)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

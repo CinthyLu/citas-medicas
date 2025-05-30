@@ -1,0 +1,33 @@
+<form [formGroup]="formAgenda" (ngSubmit)="guardar()">
+  <div class="form-group">
+    <label>Médico</label>
+    <select class="form-control" formControlName="medicoId">
+      <option *ngFor="let medico of medicos" [value]="medico.id">
+        {{ medico.nombre }}
+      </option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Fecha</label>
+    <input type="date" class="form-control" formControlName="fecha">
+  </div>
+
+  <div class="form-group">
+    <label>Hora de Inicio</label>
+    <input type="time" class="form-control" formControlName="horaInicio">
+  </div>
+
+  <div class="form-group">
+    <label>Hora de Fin</label>
+    <input type="time" class="form-control" formControlName="horaFin">
+  </div>
+
+  <div class="form-group form-check">
+    <input type="checkbox" class="form-check-input" formControlName="disponible">
+    <label class="form-check-label">Disponible</label>
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="formAgenda.invalid">Guardar</button>
+  <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+</form>

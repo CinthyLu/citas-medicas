@@ -39,9 +39,12 @@ export class PacienteSolicitarCitaComponent implements OnInit {
 
     this.loadMedicos();
 
+    // Cuando se selecciona un médico, carga sus agendas disponibles
     this.form.get('medicoId')?.valueChanges.subscribe(medicoId => {
-      this.nombreMedicoSeleccionado = this.medicos.find(m => m.id === medicoId)?.nombre || '';
+      const medico = this.medicos.find(m => m.id === medicoId);
+      this.nombreMedicoSeleccionado = medico?.nombre || '';
       this.cargarAgendasDisponibles(medicoId);
+      this.form.get('agendaId')?.setValue(''); // Limpiar selección anterior
     });
   }
 
@@ -58,6 +61,8 @@ export class PacienteSolicitarCitaComponent implements OnInit {
   }
 
   async solicitarCita() {
+    this.mensaje = '';
+
     if (this.form.invalid) {
       this.mensaje = 'Por favor, complete todos los campos correctamente.';
       return;
@@ -71,7 +76,7 @@ export class PacienteSolicitarCitaComponent implements OnInit {
 
     const agendaSeleccionada = this.agendasDisponibles.find(a => a.id === this.form.value.agendaId);
     if (!agendaSeleccionada) {
-      this.mensaje = 'Agenda seleccionada no válida.';
+      this.mensaje = 'Agenda seleccionada no válida o ya no está disponible.';
       return;
     }
 
@@ -87,21 +92,14 @@ export class PacienteSolicitarCitaComponent implements OnInit {
     };
 
     try {
-      // 1. Registrar la cita
-     await this.citasService.solicitarCita(cita, agendaSeleccionada.id!);
+      await this.citasService.solicitarCita(cita, agendaSeleccionada.id!);
+      this.mensaje = '✅ Cita solicitada correctamente.';
 
-
-      // 2. Marcar la agenda como no disponible
-      if (agendaSeleccionada.id) {
-        await this.agendaService.actualizarAgenda(agendaSeleccionada.id, { disponible: false });
-      }
-
-      this.mensaje = 'Cita solicitada correctamente.';
       this.form.reset();
       this.agendasDisponibles = [];
     } catch (error) {
       console.error(error);
-      this.mensaje = 'Error al solicitar cita.';
+      this.mensaje = '❌ Error al solicitar cita. Intente más tarde.';
     }
   }
 }

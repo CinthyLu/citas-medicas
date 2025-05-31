@@ -36,11 +36,16 @@ export class CitasComponent implements OnInit {
       .then(() => this.obtenerCitasPendientes());
   }
 
-  eliminarCita(id: string): void {
-    if (confirm('¿Estás seguro de que deseas eliminar esta cita?')) {
-      this.citasService.eliminarCita(id)
-        .then(() => this.obtenerCitasPendientes());
-    }
+eliminarCita(cita: any) {
+  if (confirm('¿Seguro que quieres eliminar esta cita?')) {
+    this.citasService.eliminarCita(cita.id, cita.idAgenda).then(() => {
+      alert('Cita eliminada y agenda actualizada.');
+    }).catch(err => {
+      console.error('Error al eliminar cita:', err);
+      alert('No se pudo eliminar la cita.');
+    });
   }
+}
+
 }
 

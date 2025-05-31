@@ -18,6 +18,9 @@
       </option>
     </select>
   </div>
+  <div *ngIf="form.get('medicoId')?.value && agendasDisponibles.length === 0">
+    <p style="color: red;">Este médico no tiene agendas disponibles.</p>
+  </div>
 
   <label for="motivo">Motivo:</label>
   <textarea id="motivo" formControlName="motivo" rows="3"></textarea>
@@ -25,4 +28,4 @@
   <button type="submit">Solicitar Cita</button>
 </form>
 
-<p *ngIf="mensaje">{{ mensaje }}</p>
+<p *ngIf="mensaje" [style.color]="mensaje.includes('✅') ? 'green' : 'red'">{{ mensaje }}</p>

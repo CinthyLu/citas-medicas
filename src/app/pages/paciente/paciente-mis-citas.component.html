@@ -10,7 +10,8 @@
       <strong>Médico:</strong> {{ cita?.medicoNombre }} <br>
       <strong>Fecha:</strong> {{ cita?.fecha | date:'medium' }} <br>
       <strong>Estado:</strong> {{ cita?.estado }} <br>
-     <button (click)="eliminarCita(cita?.id)">Cancelar</button>
+     <button (click)="eliminarCita(cita)">Cancelar</button>
+
 
     </li>
   </ul>

@@ -80,9 +80,13 @@ getCitasConNombres(): Observable<Cita[]> {
   }
 
 
-  solicitarCita(cita: any, idAgenda: string) {
+solicitarCita(cita: any, idAgenda: string) {
   const citasRef = collection(this.firestore, 'citas');
-  return addDoc(citasRef, cita).then(() => {
+  const citaConAgenda = {
+    ...cita,
+    uidAgenda: idAgenda // 🔁 Agregamos el ID de agenda
+  };
+  return addDoc(citasRef, citaConAgenda).then(() => {
     const agendaRef = doc(this.firestore, `agendas/${idAgenda}`);
     return updateDoc(agendaRef, { disponible: false });
   });
@@ -94,23 +98,21 @@ cancelarCita(citaId: string): Promise<void> {
   return deleteDoc(citaRef);
 }
 
-async eliminarCita(id: string): Promise<void> {
-  const citaRef = doc(this.firestore, `citas/${id}`);
-  const snapshot = await getDoc(citaRef);
+eliminarCita(idCita: string, idAgenda: string) {
+  const citaRef = doc(this.firestore, `citas/${idCita}`);
+  const agendaRef = doc(this.firestore, `agendas/${idAgenda}`);
 
-  if (!snapshot.exists()) {
-    throw new Error('La cita no existe');
-  }
+  return deleteDoc(citaRef).then(() => {
+    return updateDoc(agendaRef, { disponible: true });
+  }).catch(err => {
+    console.error('Error actualizando agenda:', err);
+    throw err;
+  });
+}
 
-  const citaData: any = snapshot.data();
-  const uidAgenda = citaData.uidAgenda;
-
-  await deleteDoc(citaRef);
-
-  if (uidAgenda) {
-    const agendaRef = doc(this.firestore, `agendas/${uidAgenda}`);
-    await updateDoc(agendaRef, { disponible: true });
-  }
+updateAgenda(id: string, data: any) {
+  const agendaDoc = doc(this.firestore, 'agendas', id);
+  return updateDoc(agendaDoc, data);
 }
 
 

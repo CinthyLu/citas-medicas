@@ -29,11 +29,12 @@ export class PacientePerfilComponent implements OnInit {
         if (paciente) {
           this.pacienteActual = paciente;
           this.form = this.fb.group({
-            nombre: [paciente.nombre, Validators.required],
-            direccion: [paciente.direccion, Validators.required],
-            fechaNacimiento: [paciente.fechaNacimiento, Validators.required],
-            email: [{ value: paciente.email, disabled: true }]
-          });
+          nombre: [{ value: paciente.nombre, disabled: true }, Validators.required],
+          direccion: [{ value: paciente.direccion, disabled: true }, Validators.required],
+          fechaNacimiento: [{ value: paciente.fechaNacimiento, disabled: true }, Validators.required],
+          email: [{ value: paciente.email, disabled: true }]
+       });
+
         }
       });
     }

@@ -29,15 +29,15 @@ ngOnInit(): void {
   );
 }
 
- eliminarCita(id: string) {
-  if (confirm('¿Seguro que quieres eliminar esta cita?')) {
-    this.citasService.eliminarCita(id).then(() => {
-      alert('Cita eliminada y disponibilidad actualizada.');
-    }).catch(error => {
-      console.error(error);
+eliminarCita(cita: any) {
+  if (confirm('¿Seguro que quieres cancelar esta cita?')) {
+    this.citasService.eliminarCita(cita.id, cita.idAgenda).then(() => {
+      alert('Cita eliminada correctamente.');
+    }).catch(() => {
       alert('Error al eliminar la cita.');
     });
   }
 }
+
 
 }

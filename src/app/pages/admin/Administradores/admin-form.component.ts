@@ -48,7 +48,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
   </form>
 
   <div class="buttons">
-    <button type="button" (click)="crearAdminConGoogle()">Crear con Google</button>
+    <button type="button" (click)="crearAdminConGoogle()" class="google">Crear con Google</button>
   </div>
 </div>
 

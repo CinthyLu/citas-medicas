@@ -9,15 +9,14 @@ import { AdminFormComponent } from './admin-form.component';
   standalone: true,
   selector: 'app-admin-list',
   imports: [CommonModule, AdminFormComponent],
+  styleUrls: ['./admin-form.component.css'],
   template: `
     <div class="container">
      <app-admin-form
-  [admin]="selectedAdmin"
-  (formSubmit)="handleFormSubmit()"
-  (cancelEdit)="selectedAdmin = null">
-</app-admin-form>
-
-
+      [admin]="selectedAdmin"
+      (formSubmit)="handleFormSubmit()"
+      (cancelEdit)="selectedAdmin = null">
+    </app-admin-form>
       <table class="admin-table">
         <thead>
           <tr>

@@ -1,5 +1,13 @@
 <div class="dashboard">
-  <aside class="sidebar">
+  <div class="menu">
+    <label class="burger" for="burger">
+      <input type="checkbox" id="burger" [(ngModel)]="isMenuOpen">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+  </div>
+  <aside class="sidebar" [ngClass]="{'active': isMenuOpen}">
     <nav>
       <ul>
         <li><a routerLink="pacientes" routerLinkActive="active">Pacientes</a></li>

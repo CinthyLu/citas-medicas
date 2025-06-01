@@ -18,46 +18,6 @@ h2 {
   text-align: center;
 }
 
-/* Tabla de pacientes */
-.paciente-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1.5rem;
-}
-
-.paciente-table thead {
-  background-color: #2980b9;
-  color: white;
-}
-
-.paciente-table th,
-.paciente-table td {
-  padding: 0.75rem 1rem;
-  border: 1px solid #ddd;
-  text-align: left;
-  font-size: 0.95rem;
-}
-
-.paciente-table tbody tr:hover {
-  background-color: #f0f8ff;
-}
-
-.paciente-table button {
-  background-color: #3498db;
-  border: none;
-  padding: 0.4rem 0.8rem;
-  color: white;
-  font-size: 0.85rem;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-right: 0.5rem;
-  transition: background-color 0.2s ease-in-out;
-}
-
-.paciente-table button:hover {
-  background-color: #1d6fa5;
-}
-
 /* Formulario */
 form {
   display: flex;
@@ -134,18 +94,59 @@ form button.cancel-btn:hover {
   background-color: #962d22;
 }
 
-/* Responsive para pantallas pequeñas */
-@media (max-width: 600px) {
-  form .form-group {
-    flex: 1 1 100%;
-  }
+.google{
+  padding: 10px;
+  background-color: #e74c3c ;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+.google:hover{
+  background-color: #ac291b;
+}
 
-  .paciente-table th, .paciente-table td {
-    font-size: 0.85rem;
-  }
 
-  .paciente-table button {
-    padding: 0.3rem 0.6rem;
-    font-size: 0.75rem;
-  }
+/* Tabla de admins */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+}
+
+.admin-table thead {
+  background-color: #2980b9;
+  color: white;
+}
+.admin-table th {
+  background-color:#2980b9
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  text-align: left;
+  font-size: 0.95rem;
+  
+}
+
+.admin-table tbody tr:hover {
+  background-color: #f0f8ff;
+}
+
+.admin-table button {
+  background-color: #3498db;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  color: white;
+  font-size: 0.85rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.admin-table button:hover {
+  background-color: #1d6fa5;
 }

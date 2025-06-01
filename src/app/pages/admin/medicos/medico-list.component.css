@@ -133,10 +133,7 @@ form button:hover {
 form button.cancel-btn:hover {
   background-color: #962d22;
 }
-
-/* Responsive para pantallas pequeñas */
-@media (max-width: 600px) {
-  form .form-group {
+form .form-group {
     flex: 1 1 100%;
   }
 
@@ -188,4 +185,7 @@ form button.cancel-btn:hover {
   background-color: #1d6fa5;
 }
 
+/* Responsive para pantallas pequeñas */
+@media (min-width: 950px) {
+  
 }

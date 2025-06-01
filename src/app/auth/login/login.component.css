@@ -1,11 +1,14 @@
 .login-form {
+  min-width: 250px;
+  width: calc(100% - 120px);
   max-width: 350px;
-  margin: 40px auto;
   padding: 20px 25px;
-  background-color: #f9f9f9;
+  margin: auto 30px;
+  background-color: #fdfdfd;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+  box-shadow: 4px 4px 9px rgba(0, 225, 255, 0.3);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
 }
 
 .input-field {
@@ -27,10 +30,13 @@
 }
 
 .error-message {
-  color: #d93025;
+  color: #a50b009d;
   font-size: 0.85rem;
   margin-top: 4px;
+  min-width: fit-content;
+  max-width: 100%;
 }
+
 
 .btn {
   display: block;
@@ -46,7 +52,7 @@
 }
 
 .primary-btn {
-  background-color: #007bff;
+  background-color: #1385ffd3;
   color: white;
 }
 
@@ -54,9 +60,14 @@
   background-color: #7aa7e9;
   cursor: not-allowed;
 }
+.primary-btn:hover {
+  background-color: #2d81ff;
+  cursor: not-allowed;
+}
+
 
 .google-btn {
-  background-color: #dd4b39;
+  background-color: #dd4c39c9;
   color: white;
   margin-top: 10px;
 }
@@ -75,4 +86,10 @@
 
 .link:hover {
   text-decoration: underline;
+}
+
+@media screen and (min-width: 600px) {
+  .login-form {
+    width: 350px;
+  }
 }

@@ -1,21 +1,20 @@
+<div class="topbar" *ngIf="!isDesktop">
+  <button class="burger" (click)="isMenuOpen = !isMenuOpen" aria-label="Abrir menú">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</div>
 <div class="dashboard">
-  <div class="menu">
-    <label class="burger" for="burger">
-      <input type="checkbox" id="burger" [(ngModel)]="isMenuOpen">
-      <span></span>
-      <span></span>
-      <span></span>
-    </label>
-  </div>
-  <aside class="sidebar" [ngClass]="{'active': isMenuOpen}">
+  <aside class="sidebar" [class.open]="isMenuOpen || isDesktop">
     <nav>
       <ul>
-        <li><a routerLink="pacientes" routerLinkActive="active">Pacientes</a></li>
-        <li><a routerLink="medicos" routerLinkActive="active">Médicos</a></li>
-        <li><a routerLink="Admin" routerLinkActive="active">Administradores</a></li>
-        <li><a routerLink="agenda" routerLinkActive="active">Agenda</a></li>
-        <li><a routerLink="citas" routerLinkActive="active">Solicitudes de Citas</a></li>
-        <li><a (click)="logout()" style="cursor: pointer; color: red;">Cerrar sesión</a></li>
+        <li><a routerLink="pacientes" routerLinkActive="active" (click)="isMenuOpen = false">Pacientes</a></li>
+        <li><a routerLink="medicos" routerLinkActive="active" (click)="isMenuOpen = false">Médicos</a></li>
+        <li><a routerLink="Admin" routerLinkActive="active" (click)="isMenuOpen = false">Administradores</a></li>
+        <li><a routerLink="agenda" routerLinkActive="active" (click)="isMenuOpen = false">Agenda</a></li>
+        <li><a routerLink="citas" routerLinkActive="active" (click)="isMenuOpen = false">Solicitudes de Citas</a></li>
+        <li><a (click)="logout(); isMenuOpen = false">Cerrar sesión</a></li>
       </ul>
     </nav>
   </aside>

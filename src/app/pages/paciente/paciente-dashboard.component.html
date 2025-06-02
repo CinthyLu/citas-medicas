@@ -1,11 +1,21 @@
+<div class="topbar" *ngIf="!isDesktop">
+  <button class="burger" (click)="menuOpen = !menuOpen" aria-label="Abrir menú">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</div>
+
 <div class="dashboard">
-  <aside class="sidebar">
+  <aside class="sidebar" [class.open]="menuOpen || isDesktop">
     <nav>
       <ul>
-        <li><a routerLink="perfil" routerLinkActive="active">Mi Perfil</a></li>
-        <li><a routerLink="solicitar-cita" routerLinkActive="active">Solicitar Cita</a></li>
-        <li><a routerLink="mis-citas" routerLinkActive="active">Mis Citas</a></li>
-        <li><a (click)="logout()">Cerrar sesión</a></li>
+        <li><a routerLink="pacientes" routerLinkActive="active" (click)="menuOpen = false">Pacientes</a></li>
+        <li><a routerLink="medicos" routerLinkActive="active" (click)="menuOpen = false">Médicos</a></li>
+        <li><a routerLink="Admin" routerLinkActive="active" (click)="menuOpen = false">Administradores</a></li>
+        <li><a routerLink="agenda" routerLinkActive="active" (click)="menuOpen = false">Agenda</a></li>
+        <li><a routerLink="citas" routerLinkActive="active" (click)="menuOpen = false">Solicitudes de Citas</a></li>
+        <li><a (click)="logout(); menuOpen = false" style="cursor: pointer;">Cerrar sesión</a></li>
       </ul>
     </nav>
   </aside>

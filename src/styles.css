@@ -15,3 +15,24 @@ app-root {
     justify-content: center;
     height: 100%;
 }
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  body, html {
+    font-size: 15px;
+  }
+  app-root {
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  body, html {
+    font-size: 14px;
+  }
+  app-root {
+    padding: 0;
+  }
+}

@@ -12,11 +12,20 @@ import { FormsModule, NgModel } from '@angular/forms';
   styleUrls: ['./admin-dashboard.component.css']
 })
 export class AdminDashboardComponent {
-  isMenuOpen = true;
+  isMenuOpen = false;
+  isDesktop = window.innerWidth > 900;
+
   constructor(
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) {
+    window.addEventListener('resize', () => {
+      this.isDesktop = window.innerWidth > 900;
+      if (this.isDesktop) {
+        this.isMenuOpen = false;
+      }
+    });
+  }
 
   logout() {
     this.authService.logout().then(() => {

@@ -11,7 +11,17 @@ import { AuthService } from '../../auth/auth.service';
   styleUrls: ['./paciente-dashboard.component.css']
 })
 export class PacienteDashboardComponent {
-  constructor(private authService: AuthService, private router: Router) {}
+  menuOpen = false;
+  isDesktop = window.innerWidth > 900;
+
+  constructor(private authService: AuthService, private router: Router) {
+    window.addEventListener('resize', () => {
+      this.isDesktop = window.innerWidth > 900;
+      if (this.isDesktop) {
+        this.menuOpen = false;
+      }
+    });
+  }
 
   logout(): void {
     this.authService.logout().then(() => {

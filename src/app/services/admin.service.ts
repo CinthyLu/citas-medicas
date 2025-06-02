@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, collectionData, doc, setDoc, updateDoc, deleteDoc, getDoc, query, where } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, doc, setDoc, updateDoc, deleteDoc, getDoc, query, where,docData } from '@angular/fire/firestore';
 import { Auth, createUserWithEmailAndPassword, deleteUser, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
 import { Administrador } from '../models/admin.model';
 import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Injectable({
   providedIn: 'root'
@@ -63,18 +64,26 @@ async crearAdminConGoogle(): Promise<boolean> {
     return collectionData(administradorQuery, { idField: 'uid' }) as Observable<Administrador[]>;
   }
 
-  updateAdmin(admin: Administrador): Promise<void> {
-    const docRef = doc(this.firestore, 'usuarios', admin.uid!);
-    return updateDoc(docRef, {
-      nombre: admin.nombre,
-      direccion: admin.direccion,
-      fechaNacimiento: admin.fechaNacimiento,
-      email: admin.email
-    });
-  }
+ updateAdmin(admin: Administrador): Promise<void> {
+  const docRef = doc(this.firestore, 'usuarios', admin.uid!);
+  return updateDoc(docRef, {
+    nombre: admin.nombre,
+    direccion: admin.direccion,
+    fechaNacimiento: admin.fechaNacimiento
+    
+  });
+}
+
 
   deleteAdmin(uid: string): Promise<void> {
     const docRef = doc(this.firestore, 'usuarios', uid);
     return deleteDoc(docRef);
   }
+
+  getAdminById(uid: string): Observable<Administrador | undefined> {
+  const docRef = doc(this.firestore, 'usuarios', uid);
+  return docData(docRef, { idField: 'uid' }) as Observable<Administrador>;
 }
+
+}
+

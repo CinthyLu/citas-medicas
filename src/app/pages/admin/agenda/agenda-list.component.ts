@@ -77,4 +77,7 @@ export class AgendaListComponent implements OnInit {
   const medico = this.medicos.find(m => m.id === medicoId);
   return medico ? medico.nombre : 'Sin asignar';
 }
+
+
+
 }

@@ -12,11 +12,14 @@ import { AdminFormComponent } from './admin-form.component';
   styleUrls: ['./admin-form.component.css'],
   template: `
     <div class="container">
-     <app-admin-form
-      [admin]="selectedAdmin"
-      (formSubmit)="handleFormSubmit()"
-      (cancelEdit)="selectedAdmin = null">
-    </app-admin-form>
+      <!-- Formulario para crear/editar -->
+      <app-admin-form
+        [admin]="selectedAdmin"
+        (formSubmit)="onFormSubmit()"
+        (cancelEdit)="selectedAdmin = null">
+      </app-admin-form>
+
+      <!-- Tabla de admins -->
       <table class="admin-table">
         <thead>
           <tr>
@@ -39,34 +42,7 @@ import { AdminFormComponent } from './admin-form.component';
         </tbody>
       </table>
     </div>
-  `,
-  styles: [`
-    .container {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 1rem;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-    }
-
-    th, td {
-      padding: 0.75rem;
-      border: 1px solid #ccc;
-      text-align: left;
-    }
-
-    th {
-      background-color: #f1f1f1;
-    }
-
-    button {
-      margin-right: 0.5rem;
-    }
-  `]
+  `
 })
 export class AdminListComponent implements OnInit {
   admins$!: Observable<Administrador[]>;
@@ -78,17 +54,17 @@ export class AdminListComponent implements OnInit {
     this.admins$ = this.adminService.getAdmins();
   }
 
-  editAdmin(admin: Administrador): void {
-    this.selectedAdmin = { ...admin };
+  editAdmin(admin: Administrador) {
+    this.selectedAdmin = { ...admin }; // clonar admin para edición
   }
 
-  deleteAdmin(uid: string): void {
-    if (confirm('¿Estás seguro de eliminar este administrador?')) {
+  deleteAdmin(uid: string) {
+    if (confirm('¿Seguro que quieres eliminar?')) {
       this.adminService.deleteAdmin(uid);
     }
   }
 
-  handleFormSubmit(_: void) {
-    this.selectedAdmin = null;
+  onFormSubmit() {
+    this.selectedAdmin = null;  // limpiar el formulario al terminar edición o creación
   }
 }

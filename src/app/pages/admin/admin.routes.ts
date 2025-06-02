@@ -18,6 +18,7 @@ const routes: Routes = [
       { path: 'agenda', component: AgendaListComponent },
       { path: 'citas', component: CitasComponent },
       { path: '', redirectTo: 'pacientes', pathMatch: 'full' },
+      
     ]
   }
 ];

@@ -4,7 +4,8 @@
   <app-agenda-form
     [agenda]="selectedAgenda"
     [medicos]="medicos"
-    (onSave)="onSaveAgenda($event)">
+    (onSave)="onSaveAgenda($event)"
+    (onCancel)="cancelarEdicion()">
   </app-agenda-form>
 
   <table class="table table-striped mt-3">

@@ -15,6 +15,10 @@ import { Paciente } from '../../../models/paciente.model';
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="paciente-form">
       <h3>{{ paciente?.uid ? 'Editar' : 'Registrar' }} Paciente</h3>
 
+      <div *ngIf="form.invalid && form.touched" class="error-message">
+        Todos los campos deben estar completos para realizar el registro.
+      </div>
+
       <label>Nombre:
         <input formControlName="nombre" type="text">
       </label>
@@ -28,10 +32,10 @@ import { Paciente } from '../../../models/paciente.model';
       </label>
 
       <label>Email:
-        <input formControlName="email" type="email">
+        <input formControlName="email" type="email" [readonly]="isEditMode">
       </label>
 
-      <label>Contraseña:
+      <label *ngIf="!isEditMode">Contraseña:
         <input formControlName="password" type="password" [required]="!paciente?.uid">
       </label>
 
@@ -39,7 +43,7 @@ import { Paciente } from '../../../models/paciente.model';
         <button type="submit" [disabled]="form.invalid">
           {{ paciente?.uid ? 'Actualizar' : 'Registrar' }}
         </button>
-        <button type="button" (click)="cancelEdit.emit()">Cancelar</button>
+        <button type="button" (click)="cancelar()">Cancelar</button>
       </div>
     </form>
   `,
@@ -61,12 +65,18 @@ import { Paciente } from '../../../models/paciente.model';
       display: flex;
       justify-content: space-between;
     }
+
+    .error-message {
+      color: red;
+      margin-bottom: 10px;
+    }
   `]
 })
 export class PacienteFormComponent implements OnChanges {
   @Input() paciente: Paciente | null = null;
   @Output() formSubmit = new EventEmitter<void>();
   @Output() cancelEdit = new EventEmitter<void>();
+  @Input() isEditMode: boolean = false;
 
   form: FormGroup;
 
@@ -92,8 +102,17 @@ export class PacienteFormComponent implements OnChanges {
         email: this.paciente.email,
         password: ''
       });
+      // Hacer que el campo email sea solo lectura pero siga siendo válido
+      this.form.get('email')?.setValidators([Validators.required, Validators.email]);
+      this.form.get('email')?.updateValueAndValidity();
+      // Quitar validadores de password en edición
+      this.form.get('password')?.clearValidators();
+      this.form.get('password')?.updateValueAndValidity();
     } else {
       this.form.reset();
+      // Restaurar validadores de password al registrar
+      this.form.get('password')?.setValidators(Validators.required);
+      this.form.get('password')?.updateValueAndValidity();
     }
   }
 
@@ -124,5 +143,9 @@ export class PacienteFormComponent implements OnChanges {
     }
 
     this.form.reset();
+  }
+
+  cancelar() {
+    window.location.reload();
   }
 }

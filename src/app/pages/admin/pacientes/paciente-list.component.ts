@@ -17,17 +17,18 @@ import { PacienteFormComponent } from './paciente-form.component';
 
       <app-paciente-form
         [paciente]="selectedPaciente"
+        [isEditMode]="isEditMode"
         (formSubmit)="handleFormSubmit()"
-        (cancelEdit)="selectedPaciente = null">
+        (cancelEdit)="selectedPaciente = null; isEditMode = false">
       </app-paciente-form>
 
       <table class="paciente-table">
         <thead>
           <tr>
             <th>Nombre</th>
-            <th>Apellido</th>
+            <th>Direccion</th>
+            <th>Fecha Nacimiento</th>
             <th>Email</th>
-            <th>Teléfono</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -51,6 +52,7 @@ import { PacienteFormComponent } from './paciente-form.component';
 export class PacienteListComponent implements OnInit {
   pacientes$!: Observable<Paciente[]>;
   selectedPaciente: Paciente | null = null;
+  isEditMode: boolean = false;
 
   constructor(private pacienteService: PacienteService) {}
 
@@ -64,6 +66,7 @@ export class PacienteListComponent implements OnInit {
 
   editPaciente(paciente: Paciente): void {
     this.selectedPaciente = { ...paciente };
+    this.isEditMode = true;
   }
 
   deletePaciente(id: string): void {
@@ -76,6 +79,7 @@ export class PacienteListComponent implements OnInit {
 
   handleFormSubmit() {
     this.selectedPaciente = null;
+    this.isEditMode = false;
     this.loadPacientes();
   }
 }

@@ -67,6 +67,6 @@ if (this.agenda?.id) {
   }
 
   cancelar() {
-    this.onCancel.emit();
+    window.location.reload();
   }
 }

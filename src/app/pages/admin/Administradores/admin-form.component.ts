@@ -43,7 +43,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
     <div class="buttons">
       <button type="submit">{{ isEdit ? 'Actualizar' : 'Registrar' }}</button>
-      <button type="button" class="cancel-btn" (click)="router.navigate(['/admin/administradores'])">Cancelar</button>
+      <button type="button" class="cancel-btn" (click)="cancelar()">Cancelar</button>
     </div>
   </form>
 
@@ -154,5 +154,9 @@ private resetForm() {
         verticalPosition: 'top',
       });
     }
+  }
+
+  cancelar() {
+    window.location.reload();
   }
 }

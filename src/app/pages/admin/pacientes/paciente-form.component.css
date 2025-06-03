@@ -8,6 +8,7 @@
   box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
+  box-sizing: border-box;
 }
 
 /* Títulos */
@@ -23,6 +24,10 @@ h2 {
   width: 100%;
   border-collapse: collapse;
   margin-top: 1.5rem;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
 }
 
 .paciente-table thead {
@@ -36,6 +41,8 @@ h2 {
   border: 1px solid #ddd;
   text-align: left;
   font-size: 0.95rem;
+  word-wrap: break-word;
+  vertical-align: middle;
 }
 
 .paciente-table tbody tr:hover {
@@ -52,6 +59,7 @@ h2 {
   cursor: pointer;
   margin-right: 0.5rem;
   transition: background-color 0.2s ease-in-out;
+  white-space: nowrap;
 }
 
 .paciente-table button:hover {
@@ -71,6 +79,7 @@ form {
   margin-bottom: 2rem;
   margin-left: auto;
   margin-right: auto;
+  box-sizing: border-box;
 }
 
 form .form-group {
@@ -85,7 +94,8 @@ form label {
   color: #34495e;
 }
 
-form input, form select {
+form input,
+form select {
   padding: 0.5rem 0.8rem;
   font-size: 1rem;
   border: 1px solid #bdc3c7;
@@ -93,7 +103,8 @@ form input, form select {
   transition: border-color 0.2s ease-in-out;
 }
 
-form input:focus, form select:focus {
+form input:focus,
+form select:focus {
   outline: none;
   border-color: #2980b9;
   box-shadow: 0 0 4px #2980b9aa;
@@ -136,14 +147,76 @@ form button.cancel-btn:hover {
   background-color: #962d22;
 }
 
-
 /* Responsive para pantallas pequeñas */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+
+  /* Formulario: una columna */
   form .form-group {
     flex: 1 1 100%;
   }
 
-  .paciente-table th, .paciente-table td {
+  /* Tabla: ocultar thead y convertir filas en bloques */
+  .paciente-table {
+    border: 0;
+    box-shadow: none;
+  }
+
+  .paciente-table thead {
+    display: none;
+  }
+
+  .paciente-table tbody tr {
+    display: block;
+    margin-bottom: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
+    padding: 1rem;
+  }
+
+  .paciente-table tbody td {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    text-align: left;
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    font-size: 0.9rem;
+  }
+
+  .paciente-table tbody td:last-child {
+    border-bottom: 0;
+    padding-top: 0.75rem;
+  }
+
+  /* Añadir etiquetas con data-label */
+  .paciente-table tbody td::before {
+    content: attr(data-label);
+    flex-basis: 40%;
+    font-weight: 600;
+    color: #555;
+    padding-right: 1rem;
+    white-space: nowrap;
+  }
+
+  /* Ajustar botones para que estén juntos y sean más grandes */
+  .paciente-table tbody td[data-label="Acciones"] {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-start;
+  }
+
+  .paciente-table tbody td[data-label="Acciones"] button {
+    flex: 1;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    margin-right: 0;
+  }
+
+  /* Reducir tamaño texto y botones */
+  .paciente-table th,
+  .paciente-table td {
     font-size: 0.85rem;
   }
 

@@ -12,46 +12,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, MatSnackBarModule],
   styleUrls: ['./admin-form.component.css'],
-  template: `
-   <div class="container">
-  <h2>{{ isEdit ? 'Editar Administrador' : 'Registrar Administrador' }}</h2>
-  <form [formGroup]="adminForm" (ngSubmit)="guardar()">
-    <div class="form-group">
-      <label>Nombre</label>
-      <input type="text" formControlName="nombre" class="form-control" />
-    </div>
-
-    <div class="form-group">
-      <label>Dirección</label>
-      <input type="text" formControlName="direccion" class="form-control" />
-    </div>
-
-    <div class="form-group">
-      <label>Fecha de Nacimiento</label>
-      <input type="date" formControlName="fechaNacimiento" class="form-control" />
-    </div>
-
-    <div class="form-group">
-      <label>Email</label>
-     <input type="email" formControlName="email" class="form-control" [readonly]="isEdit" />
-    </div>
-
-    <div class="form-group" *ngIf="!isEdit">
-      <label>Contraseña</label>
-      <input type="password" formControlName="password" class="form-control" />
-    </div>
-
-    <div class="buttons">
-      <button type="submit">{{ isEdit ? 'Actualizar' : 'Registrar' }}</button>
-      <button type="button" class="cancel-btn" (click)="cancelar()">Cancelar</button>
-    </div>
-  </form>
-
-  <div class="buttons" *ngIf="!isEdit">
-    <button type="button" (click)="crearAdminConGoogle()" class="google">Crear con Google</button>
-  </div>
-</div>
-  `,
+  templateUrl: './admin-form.component.html',
 })
 export class AdminFormComponent implements OnInit, OnChanges {
   @Input() admin: Administrador | null = null;
@@ -128,6 +89,8 @@ async guardar() {
   }
 
   this.router.navigate(['/admin/administradores']);
+
+  this.resetForm();
 }
 
 // 👇 NUEVO MÉTODO PARA RESETEAR FORMULARIO A ESTADO DE CREACIÓN

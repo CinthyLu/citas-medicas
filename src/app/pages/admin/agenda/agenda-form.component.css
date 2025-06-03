@@ -3,6 +3,7 @@
   padding: 1rem;
   max-width: 600px;
   margin: auto;
+  box-sizing: border-box;
 }
 
 form {
@@ -64,4 +65,24 @@ button:hover {
 .success-message {
   color: green;
   font-size: 0.9rem;
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 600px) {
+  form {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    font-size: 0.95rem;
+    padding: 0.65rem;
+  }
+
+  button {
+    width: 100%;
+  }
 }

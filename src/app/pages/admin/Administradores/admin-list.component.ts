@@ -9,40 +9,8 @@ import { AdminFormComponent } from './admin-form.component';
   standalone: true,
   selector: 'app-admin-list',
   imports: [CommonModule, AdminFormComponent],
-  styleUrls: ['./admin-form.component.css'],
-  template: `
-    <div class="container">
-      <!-- Formulario para crear/editar -->
-      <app-admin-form
-        [admin]="selectedAdmin"
-        (formSubmit)="onFormSubmit()"
-        (cancelEdit)="selectedAdmin = null">
-      </app-admin-form>
-
-      <!-- Tabla de admins -->
-      <table class="admin-table">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Dirección</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let admin of admins$ | async">
-            <td>{{ admin.nombre }}</td>
-            <td>{{ admin.email }}</td>
-            <td>{{ admin.direccion }}</td>
-            <td>
-              <button (click)="editAdmin(admin)">Editar</button>
-              <button (click)="deleteAdmin(admin.uid!)">Eliminar</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  `
+  styleUrls: ['./admin-list.component.css'],
+  templateUrl: './admin-list.component.html',
 })
 export class AdminListComponent implements OnInit {
   admins$!: Observable<Administrador[]>;

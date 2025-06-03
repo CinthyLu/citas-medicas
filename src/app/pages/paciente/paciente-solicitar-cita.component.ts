@@ -7,6 +7,9 @@ import { Medico } from '../../models/medico.model';
 import { Agenda } from '../../models/agenda.model';
 import { Auth } from '@angular/fire/auth';
 import { CommonModule } from '@angular/common';
+import { NotificacionesService } from '../../services/notificaciones.service';
+import { AdminService } from '../../services/admin.service';
+import { PacienteService } from '../../services/paciente.service';
 
 @Component({
   selector: 'app-paciente-solicitar-cita',
@@ -27,7 +30,10 @@ export class PacienteSolicitarCitaComponent implements OnInit {
     private medicoService: MedicoService,
     private citasService: CitasService,
     private agendaService: AgendaService,
-    private auth: Auth
+    private auth: Auth,
+    private notificacionesService: NotificacionesService,
+    private adminService: AdminService,
+    private pacienteService: PacienteService
   ) {}
 
   ngOnInit(): void {
@@ -93,8 +99,25 @@ export class PacienteSolicitarCitaComponent implements OnInit {
 
     try {
       await this.citasService.solicitarCita(cita, agendaSeleccionada.id!);
-      this.mensaje = '✅ Cita solicitada correctamente.';
-
+      // Obtener datos del paciente
+      const paciente = await this.pacienteService.getPaciente(usuario.uid);
+      if (paciente) {
+        this.notificacionesService.enviarCorreo(
+          paciente.email,
+          `Su solicitud de cita para el día ${cita.fecha} a las ${cita.hora} está pendiente de confirmación.`
+        );
+      }
+      // Notificar a todos los administradores
+      this.adminService.getAdmins().subscribe(admins => {
+        admins.forEach(admin => {
+          this.notificacionesService.enviarCorreo(
+            admin.email,
+            `Nueva solicitud de cita pendiente de confirmación para el paciente ${paciente?.nombre || usuario.email}.`
+          );
+        });
+      });
+      this.notificacionesService.enviarWhatsApp('whatsapp-del-paciente', 'Su cita ha sido solicitada.');
+      this.mensaje = '✅ Cita solicitada correctamente. Se ha enviado un correo de notificación al paciente y a los administradores.';
       this.form.reset();
       this.agendasDisponibles = [];
     } catch (error) {

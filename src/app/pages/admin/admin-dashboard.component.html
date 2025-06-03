@@ -19,6 +19,9 @@
     </nav>
   </aside>
   <main class="content">
+    <div *ngIf="citasPendientesCount > 0" class="notificacion-citas-pendientes">
+      <strong>🔔 Hay {{ citasPendientesCount }} cita(s) esperando resolución.</strong>
+    </div>
     <router-outlet></router-outlet>
   </main>
 </div>

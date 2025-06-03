@@ -10,17 +10,18 @@
   <aside class="sidebar" [class.open]="menuOpen || isDesktop">
     <nav>
       <ul>
-        <li><a routerLink="pacientes" routerLinkActive="active" (click)="menuOpen = false">Pacientes</a></li>
-        <li><a routerLink="medicos" routerLinkActive="active" (click)="menuOpen = false">Médicos</a></li>
-        <li><a routerLink="Admin" routerLinkActive="active" (click)="menuOpen = false">Administradores</a></li>
-        <li><a routerLink="agenda" routerLinkActive="active" (click)="menuOpen = false">Agenda</a></li>
-        <li><a routerLink="citas" routerLinkActive="active" (click)="menuOpen = false">Solicitudes de Citas</a></li>
+        <li><a routerLink="perfil" routerLinkActive="active" (click)="menuOpen = false">Perfil</a></li>
+        <li><a routerLink="solicitar-cita" routerLinkActive="active" (click)="menuOpen = false">Solicitar Cita</a></li>
+        <li><a routerLink="mis-citas" routerLinkActive="active" (click)="menuOpen = false">Mis Citas</a></li>
         <li><a (click)="logout(); menuOpen = false" style="cursor: pointer;">Cerrar sesión</a></li>
       </ul>
     </nav>
   </aside>
 
   <main class="content">
+    <div *ngIf="citasPendientes.length > 0" class="notificacion-citas-pendientes-paciente">
+      <strong>🔔 Tienes {{ citasPendientes.length }} cita(s) pendientes de confirmación o resolución.</strong>
+    </div>
     <router-outlet></router-outlet>
   </main>
 </div>

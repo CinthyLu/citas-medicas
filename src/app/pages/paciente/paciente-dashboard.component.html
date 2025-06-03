@@ -1,3 +1,4 @@
+<!-- Topbar (solo visible en móviles) -->
 <div class="topbar" *ngIf="!isDesktop">
   <button class="burger" (click)="menuOpen = !menuOpen" aria-label="Abrir menú">
     <span></span>
@@ -6,7 +7,9 @@
   </button>
 </div>
 
+<!-- Contenedor principal -->
 <div class="dashboard">
+  <!-- Sidebar -->
   <aside class="sidebar" [class.open]="menuOpen || isDesktop">
     <nav>
       <ul>
@@ -18,6 +21,7 @@
     </nav>
   </aside>
 
+  <!-- Contenido principal -->
   <main class="content">
     <div *ngIf="citasPendientes.length > 0" class="notificacion-citas-pendientes-paciente">
       <strong>🔔 Tienes {{ citasPendientes.length }} cita(s) pendientes de confirmación o resolución.</strong>

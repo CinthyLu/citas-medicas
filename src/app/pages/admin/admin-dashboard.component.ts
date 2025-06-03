@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router'; // ✅ importa Router
-import { AuthService } from '../../auth/auth.service'; // ✅ ajusta la ruta según tu estructura
-import { FormsModule, NgModel } from '@angular/forms';
+import { RouterModule, Router } from '@angular/router';
+import { AuthService } from '../../auth/auth.service';
+import { FormsModule } from '@angular/forms';
 import { CitasService } from '../../services/citas.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -12,31 +13,46 @@ import { CitasService } from '../../services/citas.service';
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.css']
 })
-export class AdminDashboardComponent {
+export class AdminDashboardComponent implements OnDestroy {
   isMenuOpen = false;
   isDesktop = window.innerWidth > 900;
-  citasPendientesCount: number = 0;
+  citasPendientesCount = 0;
+
+  private resizeListener = () => {
+    this.isDesktop = window.innerWidth > 900;
+    if (this.isDesktop) {
+      this.isMenuOpen = false;
+    }
+  };
+
+  private citasSubscription?: Subscription;
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private citasService: CitasService
   ) {
-    window.addEventListener('resize', () => {
-      this.isDesktop = window.innerWidth > 900;
-      if (this.isDesktop) {
-        this.isMenuOpen = false;
-      }
+    window.addEventListener('resize', this.resizeListener);
+
+    this.citasSubscription = this.citasService.getCitas().subscribe(citas => {
+      this.citasPendientesCount = (citas || []).filter(c => c.estado === 'pendiente').length;
     });
-    // Obtener cantidad de citas pendientes
-    this.citasService.getCitas().subscribe(citas => {
-      this.citasPendientesCount = (citas || []).filter((c: any) => c.estado === 'pendiente').length;
-    });
+  }
+
+  cerrarMenu() {
+    if (!this.isDesktop) {
+      this.isMenuOpen = false;
+    }
   }
 
   logout() {
     this.authService.logout().then(() => {
       this.router.navigate(['/']);
     });
+  }
+
+  ngOnDestroy(): void {
+    window.removeEventListener('resize', this.resizeListener);
+    this.citasSubscription?.unsubscribe();
   }
 }

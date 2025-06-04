@@ -192,7 +192,7 @@
 
   /* Menú desplegable móvil */
   .mobile-menu {
-    
+    display: block;
     position: fixed;
     top: -50vh; /* justo debajo del topbar */
     left: 0;

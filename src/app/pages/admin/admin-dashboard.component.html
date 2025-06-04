@@ -1,6 +1,6 @@
 <div class="topbar" *ngIf="!isDesktop">
   <label class="burger" for="burger">
-    <input type="checkbox" id="burger" (click)="cerrarMenu()">
+    <input type="checkbox" id="burger" [checked]="isMenuOpen" (change)="cerrarMenu()">
     <span></span>
     <span></span>
     <span></span>
@@ -28,9 +28,8 @@
 
   <!-- Menú desplegable en móvil -->
   <div
-    class="mobile-menu "
+    class="mobile-menu"
     [ngClass]="{ 'activo': isMenuOpen }"
-  
     role="navigation"
     aria-label="Menú principal"
   >

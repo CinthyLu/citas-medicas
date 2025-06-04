@@ -171,6 +171,11 @@
 /* Estilos para móvil */
 /* ------------------- */
 
+.mobile-menu{
+  display: none;
+}
+
+
 @media (max-width: 900px) {
 
 
@@ -187,6 +192,7 @@
 
   /* Menú desplegable móvil */
   .mobile-menu {
+    
     position: fixed;
     top: -50vh; /* justo debajo del topbar */
     left: 0;

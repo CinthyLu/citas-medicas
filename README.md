@@ -29,4 +29,3 @@ Aplicación web desarrollada con **Angular** y **Firebase** para la gestión efi
 Puedes acceder a la versión desplegada desde el siguiente enlace:  
 🔗 [https://citas-medicas-f73b9.web.app/](https://citas-medicas-f73b9.web.app/)
 
-lslslslls"# citas-medicas" 

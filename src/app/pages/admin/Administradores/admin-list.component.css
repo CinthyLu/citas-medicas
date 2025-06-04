@@ -1,6 +1,6 @@
 /* Contenedor general */
 .container {
-  max-width: 900px;
+  
   margin: 2rem auto;
   padding: 1rem 2rem;
   background: #fff;
@@ -63,6 +63,7 @@
   }
 
   .admin-table thead {
+    
     display: none;
   }
 
@@ -78,7 +79,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.6rem 1rem;
+    padding: 9px 0;
     border: none;
     border-bottom: 1px solid #eee;
     font-size: 0.95rem;
@@ -90,6 +91,11 @@
     color: #2c3e50;
     flex-basis: 40%;
     text-align: left;
+  }
+  
+  .admin-table td{
+    padding-right: 15px;
+    text-align: right;
   }
 
   .admin-table td:last-child {

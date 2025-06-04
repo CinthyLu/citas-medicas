@@ -1,14 +1,10 @@
 <div class="topbar" *ngIf="!isDesktop">
-  <button
-    class="burger"
-    (click)="isMenuOpen = !isMenuOpen"
-    [attr.aria-expanded]="isMenuOpen"
-    aria-label="Abrir menú"
-  >
+  <label class="burger" for="burger">
+    <input type="checkbox" id="burger" (click)="cerrarMenu()">
     <span></span>
     <span></span>
     <span></span>
-  </button>
+  </label>
 </div>
 
 <div class="dashboard">
@@ -32,8 +28,9 @@
 
   <!-- Menú desplegable en móvil -->
   <div
-    class="mobile-menu"
-    *ngIf="!isDesktop && isMenuOpen"
+    class="mobile-menu "
+    [ngClass]="{ 'activo': isMenuOpen }"
+  
     role="navigation"
     aria-label="Menú principal"
   >
@@ -53,7 +50,6 @@
     <div *ngIf="citasPendientesCount > 0" class="notificacion-citas-pendientes" role="alert" aria-live="polite">
       <strong>🔔 Hay {{ citasPendientesCount }} cita(s) esperando resolución.</strong>
     </div>
-
     <router-outlet></router-outlet>
   </main>
 </div>

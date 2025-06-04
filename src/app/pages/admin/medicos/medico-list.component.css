@@ -1,6 +1,5 @@
 /* Contenedor general */
 .container {
-  max-width: 900px;
   margin: 2rem auto;
   padding: 1rem 2rem;
   background: #fff;
@@ -186,6 +185,18 @@ form .form-group {
 }
 
 /* Responsive para pantallas pequeñas */
-@media (min-width: 950px) {
+@media (max-width: 950px) {
+
+  .oculto{
+    display:none
+  }
+
+  .acciones-boton{
+    display :flex;
+    flex-direction: column;
+  }
+  .acciones-boton button{
+    margin: 3px 0 ;
+  }
   
 }

@@ -1,14 +1,13 @@
 <!-- Topbar (solo visible en móviles) -->
 <div class="topbar" *ngIf="!isDesktop">
-  <button class="burger" (click)="menuOpen = !menuOpen" aria-label="Abrir menú">
+  <label class="burger" for="burger">
+    <input type="checkbox" id="burger" (click)="cerrarMenu()">
     <span></span>
     <span></span>
     <span></span>
-  </button>
+  </label>
 </div>
 
-<!-- Contenedor principal -->
-<div class="dashboard">
   <!-- Sidebar -->
   <aside class="sidebar" [class.open]="menuOpen || isDesktop">
     <nav>
@@ -20,6 +19,10 @@
       </ul>
     </nav>
   </aside>
+
+<!-- Contenedor principal -->
+<div class="dashboard">
+
 
   <!-- Contenido principal -->
   <main class="content">

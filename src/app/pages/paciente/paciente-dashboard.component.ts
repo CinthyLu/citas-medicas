@@ -17,6 +17,9 @@ export class PacienteDashboardComponent implements OnDestroy {
   isDesktop = window.innerWidth > 900;
   citasPendientes: Cita[] = [];
   usuarioId: string | null = null;
+  cerrarMenu(){
+    this.menuOpen = !this.menuOpen
+  }
 
   private uidSub?: Subscription;
   private citasSub?: Subscription;

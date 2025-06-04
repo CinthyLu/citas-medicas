@@ -40,9 +40,7 @@ export class AdminDashboardComponent implements OnDestroy {
   }
 
   cerrarMenu() {
-    if (!this.isDesktop) {
-      this.isMenuOpen = false;
-    }
+      this.isMenuOpen = !this.isMenuOpen;
   }
 
   logout() {

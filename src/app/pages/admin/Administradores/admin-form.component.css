@@ -1,6 +1,6 @@
 /* === Contenedor General === */
 .container {
-  max-width: 900px;
+  
   margin: 2rem auto;
   padding: 1rem 2rem;
   background: #fff;
@@ -17,6 +17,7 @@ h2 {
   font-weight: 600;
   color: #2c3e50;
   text-align: center;
+  
 }
 
 /* === Formulario === */

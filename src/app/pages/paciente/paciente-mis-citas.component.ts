@@ -31,7 +31,7 @@ ngOnInit(): void {
 
 eliminarCita(cita: any) {
   if (confirm('¿Seguro que quieres cancelar esta cita?')) {
-    this.citasService.eliminarCita(cita.id, cita.idAgenda).then(() => {
+    this.citasService.eliminarCita(cita.id, cita.uidAgenda).then(() => {
       alert('Cita eliminada correctamente.');
     }).catch(() => {
       alert('Error al eliminar la cita.');

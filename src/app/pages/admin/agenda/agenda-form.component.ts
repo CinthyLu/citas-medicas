@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Medico } from '../../../models/medico.model';
 import { Agenda } from '../../../models/agenda.model';
+import { AgendaService } from '../../../services/agenda.service';
 
 @Component({
   standalone: true,
@@ -14,12 +15,15 @@ import { Agenda } from '../../../models/agenda.model';
 export class AgendaFormComponent implements OnInit, OnChanges {
   @Input() agenda?: Agenda;
   @Input() medicos: Medico[] = [];
+  @Input() errorPadre: string = '';
   @Output() onSave = new EventEmitter<Agenda>();
   @Output() onCancel = new EventEmitter<void>();
+  @Output() onError = new EventEmitter<string>();
 
   formAgenda!: FormGroup;
+  mensajeError: string = '';
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private agendaService: AgendaService) {}
 
   ngOnInit(): void {
     this.formAgenda = this.fb.group({
@@ -43,27 +47,21 @@ export class AgendaFormComponent implements OnInit, OnChanges {
     }
   }
 
-  guardar() {
+  async guardar() {
+    this.mensajeError = '';
     if (this.formAgenda.valid) {
       const agendaForm = this.formAgenda.value;
-
       const medico = this.medicos.find(m => m.id === agendaForm.uidMedico);
       const medicoNombre = medico ? medico.nombre : 'Sin asignar';
-
       const agenda: Agenda = {
-  ...agendaForm,
-  medicoNombre
-};
-
-if (this.agenda?.id) {
-  agenda.id = this.agenda.id;
-}
+        ...agendaForm,
+        medicoNombre
+      };
+      if (this.agenda?.id) {
+        agenda.id = this.agenda.id;
+      }
       this.onSave.emit(agenda);
     }
-
-    this.formAgenda.reset();           // Limpia los campos
-    this.onCancel.emit();              // Le dice al padre que termine la edición
-
   }
 
   cancelar() {

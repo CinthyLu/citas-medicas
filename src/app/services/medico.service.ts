@@ -34,4 +34,5 @@ export class MedicoService {
     const medicoDocRef = doc(this.firestore, `medicos/${id}`);
     return deleteDoc(medicoDocRef);
   }
+  
 }

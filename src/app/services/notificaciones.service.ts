@@ -13,4 +13,5 @@ export class NotificacionesService {
     console.log(`WhatsApp enviado a ${destinatario}: ${mensaje}`);
     // En producción, aquí se integraría con una API de WhatsApp
   }
+  
 }

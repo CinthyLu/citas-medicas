@@ -18,6 +18,7 @@ export class AgendaListComponent implements OnInit {
   agendas$!: Observable<Agenda[]>;
   medicos: Medico[] = [];
   selectedAgenda?: Agenda;
+  errorPadre: string = '';
 
 
   constructor(
@@ -53,6 +54,7 @@ export class AgendaListComponent implements OnInit {
   }
 
   onSaveAgenda(agenda: Agenda) {
+    this.errorPadre = '';
     if (agenda.id) {
       // Edición
       this.agendaService.updateAgenda(agenda.id, agenda).then(() => {
@@ -60,10 +62,29 @@ export class AgendaListComponent implements OnInit {
         this.loadAgendas();
       });
     } else {
-      // Nuevo registro
-      this.agendaService.addAgenda(agenda).then(() => {
-        this.selectedAgenda = undefined;
-        this.loadAgendas();
+      // Nuevo registro: validación de solapamiento y fecha
+      this.agendaService.getAgendasByMedico(agenda.uidMedico).subscribe(agendasExistentes => {
+        const mismaFecha = (agendasExistentes || []).find(a => a.fecha === agenda.fecha);
+        if (mismaFecha) {
+          this.errorPadre = 'Ya existe una agenda para este médico en la fecha seleccionada.';
+          return;
+        }
+        const existeSolapamiento = (agendasExistentes || []).some(a =>
+          a.fecha === agenda.fecha &&
+          (
+            (agenda.horaInicio >= a.horaInicio && agenda.horaInicio < a.horaFin) ||
+            (agenda.horaFin > a.horaInicio && agenda.horaFin <= a.horaFin) ||
+            (agenda.horaInicio <= a.horaInicio && agenda.horaFin >= a.horaFin)
+          )
+        );
+        if (existeSolapamiento) {
+          this.errorPadre = 'El médico ya tiene una agenda en ese horario.';
+          return;
+        }
+        this.agendaService.addAgenda(agenda).then(() => {
+          this.selectedAgenda = undefined;
+          this.loadAgendas();
+        });
       });
     }
   }

@@ -16,6 +16,7 @@ export class AdminService {
     private auth: Auth,
     private snackBar: MatSnackBar
   ) {}
+  
 
   registerAdmin(admin: Administrador, password: string): Promise<void> {
     return createUserWithEmailAndPassword(this.auth, admin.email, password)

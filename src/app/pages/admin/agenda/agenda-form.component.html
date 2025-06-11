@@ -28,6 +28,9 @@
     <label class="form-check-label">Disponible</label>
   </div>
 
+  <div *ngIf="mensajeError" class="alert alert-danger">{{ mensajeError }}</div>
+  <div *ngIf="errorPadre" class="alert alert-danger">{{ errorPadre }}</div>
+
   <button type="submit" class="btn btn-primary" [disabled]="formAgenda.invalid">Guardar</button>
   <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
 </form>

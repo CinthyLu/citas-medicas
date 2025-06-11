@@ -4,6 +4,7 @@
   <app-agenda-form
     [agenda]="selectedAgenda"
     [medicos]="medicos"
+    [errorPadre]="errorPadre"
     (onSave)="onSaveAgenda($event)"
     (onCancel)="cancelarEdicion()">
   </app-agenda-form>

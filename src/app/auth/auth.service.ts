@@ -73,6 +73,7 @@ async login(email: string, password: string) {
 
  async loginWithGoogle() {
   const provider = new GoogleAuthProvider();
+  provider.setCustomParameters({ prompt: 'select_account' }); 
   const credential = await signInWithPopup(this.auth, provider);
   const uid = credential.user?.uid;
   if (!uid) return;
@@ -81,7 +82,7 @@ async login(email: string, password: string) {
   const docSnap = await getDoc(docRef);
 
   if (!docSnap.exists()) {
-    // Si no existe el usuario, lo creamos con rol paciente por defecto
+    
     await setDoc(docRef, {
       nombre: credential.user?.displayName,
       email: credential.user?.email,
@@ -91,7 +92,7 @@ async login(email: string, password: string) {
     return;
   }
 
-  // Si el usuario existe, obtenemos su rol y redirigimos en consecuencia
+ 
   const data = docSnap.data() as { rol: string };
   const role = data.rol;
   if (role === 'administrador') {

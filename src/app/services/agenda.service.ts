@@ -36,6 +36,7 @@ getAgendasByMedico(medicoId: string): Observable<Agenda[]> {
 
 
 
+
   addAgenda(agenda: Agenda) {
     return addDoc(this.agendaRef, agenda);
   }

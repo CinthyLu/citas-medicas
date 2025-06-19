@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { AgendaService } from '../../../services/agenda.service';
 import { MedicoService } from '../../../services/medico.service';
 import { Agenda } from '../../../models/agenda.model';
 import { Medico } from '../../../models/medico.model';
 import { AgendaFormComponent } from './agenda-form.component';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   standalone: true,
   selector: 'app-agenda-list',
-  imports: [CommonModule, AgendaFormComponent],
+  imports: [CommonModule, FormsModule, AgendaFormComponent],
   templateUrl: './agenda-list.component.html',
   styleUrls: ['./agenda-list.component.css']
 })
@@ -19,6 +20,9 @@ export class AgendaListComponent implements OnInit {
   medicos: Medico[] = [];
   selectedAgenda?: Agenda;
   errorPadre: string = '';
+  filtroMedico: string = '';
+  medicoFiltradoId: string = '';
+  menuOpcion: 'unitaria' | 'completa' | 'actualizacion' = 'unitaria';
 
 
   constructor(
@@ -99,6 +103,24 @@ export class AgendaListComponent implements OnInit {
   return medico ? medico.nombre : 'Sin asignar';
 }
 
+get medicosFiltrados(): Medico[] {
+    if (!this.filtroMedico.trim()) return this.medicos;
+    return this.medicos.filter(m => m.nombre.toLowerCase().includes(this.filtroMedico.toLowerCase()));
+  }
 
+  filtrarAgendasPorMedico() {
+    if (this.medicoFiltradoId) {
+      this.agendas$ = this.agendaService.getAgendasByMedico(this.medicoFiltradoId);
+    } else {
+      this.loadAgendas();
+    }
+    this.selectedAgenda = undefined;
+  }
+
+  setMenuOpcion(opcion: 'unitaria' | 'completa' | 'actualizacion') {
+    this.menuOpcion = opcion;
+    this.selectedAgenda = undefined;
+    this.errorPadre = '';
+  }
 
 }

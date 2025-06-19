@@ -67,6 +67,42 @@ button:hover {
   font-size: 0.9rem;
 }
 
+/* Mejora visual para los días de la semana en horizontal */
+.dias-semana-container {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.dia-checkbox {
+  display: flex;
+  align-items: center;
+  background: #f5f5f5;
+  border-radius: 6px;
+  padding: 6px 12px;
+  margin-right: 0;
+  font-weight: 500;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: background 0.2s;
+}
+
+.dia-checkbox input[type="checkbox"] {
+  margin-right: 6px;
+}
+
+.dia-checkbox span {
+  font-size: 15px;
+}
+
+.dia-checkbox input[type="checkbox"]:checked+span {
+  color: #0d6efd;
+  font-weight: bold;
+}
+
 /* Responsive para pantallas pequeñas */
 @media (max-width: 600px) {
   form {
